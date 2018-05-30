@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="jquery-1.7.2.js"></script>
+    <!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+    <style>
+
+        *{
+            margin:0px;
+            padding:0px;
+
+        }
+        .father{
+            margin: 0 auto;
+            width: 300px;
+            height: 400px;
+            border: 1px solid black;
+            margin-top: 50px;
+        }
+        .div_txt{
+            margin-top: 30px;
+            margin-left: 24px;
+            position: relative;
+        }
+        .div_txt input {
+            width:250px;
+            height:30px;
+
+        }
+        .div_txt span{
+            position:absolute;
+            right: 25px;
+            top:0px;
+            cursor: pointer;
+
+        }
+
+        .div_txt span img{
+            display: inline-block;
+            width:25px;
+            height:25px;
+
+        }
+        .div_items {
+            width: 250px;
+            height: 250px;
+            margin: 0px;
+            outline: none;
+            border: 1px solid #999;
+            display: none;
+            overflow: auto;
+
+        }
+        .div_items div{
+            cursor: pointer;
+        }
+
+
+    </style>
+
+</head>
+<body>
+<div id="father" class = "father" >
+        <div id="div_txt" class="div_txt">
+            <!--要模糊匹配的文本框-->
+            <input type="text" id="txt1"/>
+            <span><img src="xiasanjiao.jpg" alt=""/></span>
+            <!--模糊匹配窗口-->
+            <div id="div_items" class="div_items">
+                        <div class="option_iteam" value="1">林青霞</div>
+                        <div class="option_iteam" value="2">谢娜</div>
+                        <div class="option_iteam" value="3">何炅</div>
+                        <div class="option_iteam" value="4">杜海涛</div>
+                        <div class="option_iteam" value="5">吴昕</div>
+                        <div class="option_iteam" value="6">李维嘉</div>
+                        <div class="option_iteam" value="7">赵丽颖</div>
+                        <div class="option_iteam" value="8">撒贝宁</div>
+                        <div class="option_iteam" value="1">林霞</div>
+                        <div class="option_iteam" value="2">谢娜一</div>
+                        <div class="option_iteam" value="3">何炅囧</div>
+                         <div class="option_iteam" value="4">杜涛</div>
+                         <div class="option_iteam" value="5">吴</div>
+                        <div class="option_iteam" value="6">李维</div>
+                        <div class="option_iteam" value="7">赵丽</div>
+                        <div class="option_iteam" value="8">撒贝</div>
+            </div>
+        </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+
+        //1.点击input出现下拉框
+        $("#txt1").click(function () {
+            $("#div_items").css('display', 'block');
+            return false; //冒泡
+        });
+        //1.1点击小按钮出现下拉框
+
+        $("img").click(function(){
+            $("#div_items").css('display', 'block');
+            return false; //冒泡
+        });
+
+        //2.点击body下拉框消失
+        $("body").click(function () {
+            $("#div_items").css('display', 'none');
+
+        });
+
+        //3.输入前缀匹配
+        $("#txt1").keyup(function(){
+
+            $("#div_items").css('display', 'block');
+            //3.1如果什么都不输入维持原样
+            if($("#txt1").val().length = 0 ){
+                $("option_iteam").css('display', 'block');
+                return;
+            }
+
+            //3.2输入后前缀匹配
+            $(".option_iteam").css('display', 'none');
+            for(var i = 0; i < $(".option_iteam").length; i++){
+
+                var start = $("#txt1").val();
+                var end = $(".option_iteam").eq(i).text().substr($("#txt1").val().length);
+                var pp =  $(".option_iteam").eq(i).text().substr(0,$("#txt1").val().length);
+
+                if(start == pp){
+
+                    $(".option_iteam").eq(i).css('display', 'block');
+                    $(".option_iteam").eq(i).html("<span>"+start+"</span>"+end).children().css("color","red");
+
+                }
+            }
+        });
+
+        //4.点击下拉框的值出现在输入框
+        $(".option_iteam").click(function () {
+            $("#txt1").val($(this).text());
+        });
+
+
+</script>
